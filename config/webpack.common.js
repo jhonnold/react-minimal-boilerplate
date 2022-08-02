@@ -1,11 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 const webpack = require('webpack');
 const tailwindcss = require('tailwindcss');
 const autoprefixer = require('autoprefixer');
 
 const paths = require('./paths');
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     entry: [paths.src + '/index.tsx'],
@@ -24,6 +26,12 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'ts-loader',
+                    options: {
+                        getCustomTransformers: () => ({
+                            before: [isDevelopment && ReactRefreshTypeScript()].filter(Boolean),
+                        }),
+                        transpileOnly: isDevelopment,
+                    },
                 },
             },
             {

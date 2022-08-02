@@ -7,5 +7,3 @@ import './assets/css/tailwind.css';
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(<App />);
-
-if (module.hot) module.hot.accept();
